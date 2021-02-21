@@ -48,6 +48,8 @@ export const moreDetailFields = [
       label: "State",
       component: "select",
       inputProps: {
+        // uncomment to test out the hook into the on-change-hook on the select field
+        // onChange: (selection_) => alert(JSON.stringify(selection_)),
         options: [
           { label: "California", value: "CA" },
           { label: "Arizona", value: "AZ" },

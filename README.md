@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# Description
+Implementation of a component that renders a simple forms based
+on data-structures. It's opinionated in the way it renders things but
+form-fields could be overriden with the `overrides` props.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+It utilizes `react-hook-form` in the background to provide a nice form
+handling experience.
 
-## Available Scripts
+# Customization
+You can customize the way fields render in three different ways. The schema for the overrides data structure is the following:
 
-In the project directory, you can run:
+```
+const overrides = {
+	<field-name>: {
+	    OverrideLabel: SomeComponent,
+		OverrideInput: SomeComponent
+		OverrideFieldControl: SomeComponent,
+	}
+}
+```
 
-### `yarn start`
+The custom components get a prop called `field` which corresponds to the `<field-name>` and it's associated data. In order to utilize react-hook-form methods you can use `useFormContext` in order to get access to all the form-state.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Label
+```
+const CustomLabel = ({ field }) => {
+  const { watch } = useFormContext();
+  const message = watch(field.name);
+  const maxLength = getIn(["rules", "maxLength", "value"], field, 50);
+  
+  return (
+    <div>
+      <span>{field.label}</span>
+	  <span>{ `${message.length}/${maxLength}`}</span>
+	</div>
+  )
+};
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+And you can add it to some input text field as follows
 
-### `yarn test`
+```
+const fields = [[ { name: "firstName", label: "First Name"}]];
+const overrides = {
+  firstName: { OverrideLabel: CustomLabel }
+}
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Input
+Similar to label but you can render your custom input
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Field Control
+See the CustomText component for an example of how this is done

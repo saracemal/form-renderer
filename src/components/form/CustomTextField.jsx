@@ -7,7 +7,6 @@ import styled from "styled-components/macro";
 import InputGroupBorder from "./InputGroupBorder";
 import { AutoSizedTextArea } from "./TextArea";
 import { StyledError } from "../FormFieldRenderer";
-import { getIn } from "../../utils";
 
 const maxNumChars = 250;
 
