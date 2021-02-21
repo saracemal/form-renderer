@@ -6,7 +6,7 @@ import styled from "styled-components/macro";
 // components
 import InputGroupBorder from "./form/InputGroupBorder";
 import PhoneNumberField from "./form/PhoneNumberField";
-// import Select from "./SelectField"; // TODO
+import Select from "./form/SelectField";
 import InputField from "./form/InputField";
 
 // utils
@@ -53,9 +53,8 @@ const getFormInputType = (inputType) => {
   switch (inputType) {
     case "phone":
       return PhoneNumberField;
-    // TODO: Add support for react-select
-    // case "select":
-    //   return Select;
+    case "select":
+      return Select;
     case "number":
     case "textarea":
     case "input":

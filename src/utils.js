@@ -4,3 +4,5 @@ export const getIn = (path, map, defaultValue = undefined) => {
     return acc[step];
   }, map);
 }
+
+export const delay = (f, time) => setTimeout(() => f(), time);
