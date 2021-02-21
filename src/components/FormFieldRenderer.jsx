@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { Label, Input, Col, FormGroup, Row } from "reactstrap";
+import { Label, Col, FormGroup, Row } from "reactstrap";
 import styled from "styled-components/macro";
 
 // components
@@ -20,11 +20,6 @@ export const StyledError = styled.span`
   color: var(--red);
   margin-top: 0.75em;
 `;
-
-const StyledFieldError = styled.p`
-  margin-bottom: 0px;
-`;
-
 
 export const RedAsterisk = () => <RedSpan>*</RedSpan>;
 
@@ -128,12 +123,11 @@ const renderGroupedFields = ({ idx, fields, overrides }) => {
       {fields.map((field) => {
         const { OverrideFieldControl, OverrideLabel, OverrideError, OverrideInput } =
           overrides[field.name] || {};
-
         return field.name ? (
           <Col xs={colSize} md={colSize} key={field.name}>
             <FormGroup>
               {OverrideFieldControl ? (
-                <OverrideFieldControl field={field} fields={fields} />
+                <OverrideFieldControl field={field} />
               ) : (
                   <>
                     {OverrideLabel
@@ -191,7 +185,6 @@ export const renderServerErrorMessages = (errors) => {
 };
 
 const FormFieldsRenderer = ({ fields, overrides = {} }) => {
-  console.log("FIELDS", fields);
   return (
     <>
       {fields.map((group, idx) =>

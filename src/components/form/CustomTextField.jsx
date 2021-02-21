@@ -1,0 +1,56 @@
+import React, { useRef } from "react";
+import { useFormContext } from "react-hook-form";
+import { Label } from "reactstrap";
+import styled from "styled-components/macro";
+
+// components
+import InputGroupBorder from "./InputGroupBorder";
+import { AutoSizedTextArea } from "./TextArea";
+import { StyledError } from "../FormFieldRenderer";
+import { getIn } from "../../utils";
+
+const maxNumChars = 250;
+
+const Circle = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: ${props => props.$color};
+  margin-right: 0.5em;
+`;
+
+const TemplateTextArea = ({ field }) => {
+  const methods = useFormContext();
+  const message = methods.watch(field.name, "");  // watch forces re-renders :(
+  const textAreaRef = useRef();
+
+  return (
+    <>
+      <div className="d-flex justify-content-between mb-1">
+        <span></span>
+        <span className="charCount d-flex">
+          {message.length <= maxNumChars && message.length > maxNumChars / 2
+            ? <Circle $color="yellow" />
+            : maxNumChars < message.length
+              ? <Circle $color="red" />
+              : <Circle $color="green" />}
+          {message.length}/{maxNumChars} Characters
+        </span>
+      </div>
+      <InputGroupBorder border="full">
+        <AutoSizedTextArea
+          inputProps={{
+            type: "textarea",
+            rows: "3",
+            name: field.name,
+          }}
+          textAreaRef={textAreaRef}
+          innerRef={(e) => methods.register(e, field.rules)}
+        />
+      </InputGroupBorder>
+      <StyledError >{methods.errors[field.name]}</StyledError>
+    </>
+  );
+};
+
+export default TemplateTextArea;

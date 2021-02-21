@@ -65,7 +65,15 @@ export const moreDetailFields = [
       name: "phone",
       label: "Phone",
       component: "phone",
-      rules: { required: "Required" }
+      inputProps: { type: "tel" },
+      rules: { required: "Required" },
+    }
+  ],
+  [
+    {
+      // provide the field name in order for the override to take
+      // effect
+      name: "textarea",
     }
   ]
 ];
