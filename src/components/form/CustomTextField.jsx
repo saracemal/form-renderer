@@ -17,7 +17,7 @@ const Circle = styled.div`
   background-color: ${props => props.$color};
   margin-right: 0.5em;
 `;
-
+// TODO: fix register
 const TemplateTextArea = ({ field }) => {
   const methods = useFormContext();
   const message = useWatch({ name: field.name, control: methods.control, defaultValue: "" });

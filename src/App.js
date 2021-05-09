@@ -39,15 +39,7 @@ function App() {
           <h2>Steps form</h2>
           <StepForm />
         </Wrapper>
-        <Wrapper className="mt-4">
-          <h2>More Details Form</h2>
-          <FormRenderer
-            id="details"
-            fields={moreDetailFields}
-            overrides={overrides}
-            onSubmit={onSubmit}
-          />
-        </Wrapper>
+
       </header>
     </div>
   );
