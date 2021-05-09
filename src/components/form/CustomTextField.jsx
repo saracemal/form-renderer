@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { Label } from "reactstrap";
 import styled from "styled-components/macro";
 
@@ -20,7 +20,7 @@ const Circle = styled.div`
 
 const TemplateTextArea = ({ field }) => {
   const methods = useFormContext();
-  const message = methods.watch(field.name, "");  // watch forces re-renders :(
+  const message = useWatch({ name: field.name, control: methods.control, defaultValue: "" });
   const textAreaRef = useRef();
 
   return (

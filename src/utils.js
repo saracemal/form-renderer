@@ -1,6 +1,6 @@
 export const getIn = (path, map, defaultValue = undefined) => {
   return path.reduce((acc, step) => {
-    if (acc[step] === undefined || !acc || acc === undefined) return defaultValue;
+    if ((acc !== undefined && acc[step] === undefined) || acc === undefined) return defaultValue;
     return acc[step];
   }, map);
 }

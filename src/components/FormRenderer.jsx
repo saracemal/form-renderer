@@ -38,14 +38,14 @@ const FormRenderer = ({
   fields = [],
   overrides = {},
   onSubmit: submit,
-  defaultValues = {},
   buttonProps = { name: "Submit", block: false, className: "" },
   formWrapper = null,
   formId = "",
+  rhfProps = {},
 }) => {
   const [submitting, setSubmitting] = useState(false);
   const [nonFieldErrors, setNonFieldErrors] = useState("");
-  const methods = useForm({ defaultValues: defaultValues });
+  const methods = useForm(rhfProps);
 
   const onSubmit = (body) => {
     setSubmitting(true);
@@ -100,8 +100,8 @@ FormRenderer.propTypes = {
   overrides: PropTypes.object,
   /** The submit action of the form */
   onSubmit: PropTypes.func.isRequired,
-  /** Default values to prepopulate the form on display */
-  defaultValues: PropTypes.object,
+  /** props to initialize `useForm` */
+  rhfProps: PropTypes.object,
   /** Additional props for the Submit button */
   buttonProps: PropTypes.object,
   /** Custom Styled Wrapper on the form */
