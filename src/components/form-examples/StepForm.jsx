@@ -2,7 +2,10 @@ import React, { useState } from "react";
 
 // components
 import FormRenderer from "../FormRenderer";
+
+// utils
 import { delay } from "../../utils";
+import { renderers } from "../renderers/bootstrap";
 
 const required = { required: "Required" };
 const childrenRegistration = [
@@ -129,6 +132,7 @@ const StepForm = () => {
         id="form-steps"
         fields={fields}
         onSubmit={onSubmit}
+        renderers={renderers}
         buttonProps={{
           name: currentStep === 2 ? "submit" : "continue"
         }}

@@ -3,7 +3,7 @@ import { Input } from "reactstrap";
 import { useFormContext } from "react-hook-form";
 
 
-const InputField = ({ field }) => {
+const InputField = ({ field, ...props }) => {
   const { name, inputProps = {} } = field;
   const { register } = useFormContext();
 
@@ -11,6 +11,7 @@ const InputField = ({ field }) => {
     <Input
       key={name}
       name={name}
+      {...props}
       {...inputProps}
       {...register(field.name, field.rules)}
     />

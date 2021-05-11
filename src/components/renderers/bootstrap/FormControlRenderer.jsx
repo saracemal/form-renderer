@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 
 // utils
 import { computeClasses } from "../utils";
+import { FormRendererContext } from "../../FormRenderer";
 
 const FormControlComponent = ({ field, renderers, overrides, ...formCtrlProps }) => {
   return (
@@ -13,7 +14,12 @@ const FormControlComponent = ({ field, renderers, overrides, ...formCtrlProps })
   )
 };
 
-const FormControlRenderer = ({ field, renderers, overrides, ...formCtrlProps }) => {
+const FormControlRenderer = ({ field }) => {
+  const {
+    overrides,
+    renderers,
+    rendererProps: { FormControlRenderer: formCtrlProps },
+  } = useContext(FormRendererContext);
   const className = computeClasses("form-control", field.name, formCtrlProps);
   const { OverrideFieldControl } = overrides[field.name] || {};
   const formControlProps = { ...formCtrlProps, className };

@@ -8,6 +8,7 @@ import StepForm from "./components/form-examples/StepForm";
 // utils
 import { delay } from "./utils";
 import { loginFields } from "./resources/fields";
+import { renderers } from "./components/renderers/bootstrap";
 
 const Wrapper = styled.div`
   width: 50%;
@@ -27,7 +28,7 @@ function App() {
       <header className="App-header">
         <Wrapper>
           <h2>Login Form</h2>
-          <FormRenderer id="login" fields={loginFields} onSubmit={onSubmit} />
+          <FormRenderer renderers={renderers} id="login" fields={loginFields} onSubmit={onSubmit} />
         </Wrapper>
         <Wrapper>
           <h2>Steps form</h2>

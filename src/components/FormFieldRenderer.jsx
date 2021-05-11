@@ -1,9 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
 
-// components
-import { renderers as renderers_ } from "./renderers/bootstrap";
-
 export const RedSpan = styled.span`
   color: red !important;
 `;
@@ -68,8 +65,7 @@ export const renderServerErrorMessages = (errors) => {
   );
 };
 
-const FormFieldsRenderer = ({ fields, overrides = {} }) => {
-  const renderers = renderers_;
+const FormFieldsRenderer = ({ fields, overrides = {}, renderers }) => {
   return (
     <>
       {fields.map((group, idx) =>

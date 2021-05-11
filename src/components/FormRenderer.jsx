@@ -34,6 +34,19 @@ ButtonsContainer.defaultProps = {
   position: "right",
 };
 
+const defaultProps = {
+  RowRenderer: {},
+  ColRenderer: {},
+  FormControlWrapperRenderer: {},
+  FormControlRenderer: {},
+  InputRenderer: {},
+  LabelRenderer: {},
+  ErrorRenderer: {},
+}
+
+// setup the context
+export const FormRendererContext = React.createContext();
+
 const FormRenderer = ({
   fields = [],
   overrides = {},
@@ -42,6 +55,8 @@ const FormRenderer = ({
   formWrapper = null,
   formId = "",
   rhfProps = {},
+  renderers = {},
+  rendererProps = defaultProps,
 }) => {
   const [submitting, setSubmitting] = useState(false);
   const [nonFieldErrors, setNonFieldErrors] = useState("");
@@ -61,35 +76,38 @@ const FormRenderer = ({
   console.log("fields", fields);
   return (
     <FormProvider {...methods}>
-      <Form id={formId} onSubmit={methods.handleSubmit(onSubmit)}>
-        <Wrapper>
-          <FormFieldsRenderer
-            fields={fields}
-            overrides={overrides}
-          />
-          {nonFieldErrors.length ? (
-            <div className="text-center">
-              {nonFieldErrors.map((error, index) => (
-                <StyledError key={index}>{error}</StyledError>
-              ))}
-            </div>
-          ) : null}
-        </Wrapper>
-        <ButtonsContainer>
-          <LoadingButton
-            color="primary"
-            className={`${buttonProps.className}`}
-            type="submit"
-            data-test="form-submit"
-            value={buttonProps.name}
-            loading={submitting}
-            disabled={submitting}
-            {...buttonProps}
-          >
-            {buttonProps.name}
-          </LoadingButton>
-        </ButtonsContainer>
-      </Form>
+      <FormRendererContext.Provider value={{ renderers, overrides, rendererProps: { ...defaultProps, ...rendererProps } }}>
+        <Form id={formId} onSubmit={methods.handleSubmit(onSubmit)}>
+          <Wrapper>
+            <FormFieldsRenderer
+              fields={fields}
+              overrides={overrides}
+              renderers={renderers}
+            />
+            {nonFieldErrors.length ? (
+              <div className="text-center">
+                {nonFieldErrors.map((error, index) => (
+                  <StyledError key={index}>{error}</StyledError>
+                ))}
+              </div>
+            ) : null}
+          </Wrapper>
+          <ButtonsContainer>
+            <LoadingButton
+              color="primary"
+              className={`${buttonProps.className}`}
+              type="submit"
+              data-test="form-submit"
+              value={buttonProps.name}
+              loading={submitting}
+              disabled={submitting}
+              {...buttonProps}
+            >
+              {buttonProps.name}
+            </LoadingButton>
+          </ButtonsContainer>
+        </Form>
+      </FormRendererContext.Provider>
     </FormProvider>
   );
 };
@@ -109,6 +127,10 @@ FormRenderer.propTypes = {
   formWrapper: PropTypes.elementType,
   /** Id of the form (used in conjunction with hasRemoteSubmitBtn) */
   formId: PropTypes.string,
+  /** The renderers used for to display the forms */
+  renderers: PropTypes.object.isRequired,
+  /** extra props for each renderer */
+  rendererProps: PropTypes.object,
 };
 
 FormRenderer.defaultProps = {

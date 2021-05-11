@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row } from "reactstrap";
 
 // utils
 import { computeClasses } from "../utils";
+import { FormRendererContext } from "../../FormRenderer";
 
-const RowRenderer = ({ id, fields, renderers, overrides, children, ...rowProps }) => {
+const RowRenderer = ({ id, fields }) => {
+  const {
+    overrides,
+    renderers,
+    rendererProps: { ColRenderer: rowProps },
+  } = useContext(FormRendererContext);
   // compute default col size(can be overriden by `field`)
   const colSize = 12 / fields.length;
   const sizes = { xs: colSize, md: colSize };

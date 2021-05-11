@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormState } from "react-hook-form";
 
 // components
@@ -9,6 +9,8 @@ import InputGroupBorder from "../../form/InputGroupBorder";
 
 // utils
 import { computeClasses } from "../utils";
+import { FormRendererContext } from "../../FormRenderer";
+
 
 const getFormInputType = (inputType) => {
   switch (inputType) {
@@ -53,16 +55,20 @@ const InputComponent = ({ field, ...props }) => {
   );
 };
 
-const FormControlRenderer = ({ field, renderers, overrides, ...formCtrlProps }) => {
-  const className = computeClasses("form-control-input", field.name, formCtrlProps);
+const InputRenderer = ({ field }) => {
+  const {
+    overrides,
+    rendererProps: { InputRenderer: inputProps },
+  } = useContext(FormRendererContext);
+  const className = computeClasses("form-control-input", field.name, inputProps);
   const { OverrideInput } = overrides[field.name] || {};
-  const inputProps = { ...formCtrlProps, className };
+  const props = { ...inputProps, className };
 
   return OverrideInput ? (
-    <OverrideInput field={field} {...inputProps} />
+    <OverrideInput field={field} {...props} />
   ) : (
-    <InputComponent field={field} {...inputProps} />
+    <InputComponent field={field} {...props} />
   );
 };
 
-export default FormControlRenderer;
+export default InputRenderer;

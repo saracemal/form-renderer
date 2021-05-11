@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FormGroup } from "reactstrap";
 
 // utils
 import { computeClasses } from "../utils";
+import { FormRendererContext } from "../../FormRenderer";
 
-const FormControlWrapperRenderer = ({ field, renderers, overrides, ...formCtrlWrapperProps }) => {
+const FormControlWrapperRenderer = ({ field }) => {
+  const {
+    overrides,
+    renderers,
+    rendererProps: { FormControlWrapperRenderer: formCtrlWrapperProps },
+  } = useContext(FormRendererContext);
   const className = computeClasses("form-control-wrapper", field.name, formCtrlWrapperProps);
   return (
     <FormGroup {...formCtrlWrapperProps} className={className}>

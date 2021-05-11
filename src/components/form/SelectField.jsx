@@ -4,13 +4,15 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { getIn } from "../../utils";
 
 
-const SelectField = ({ field }) => {
+const SelectField = ({ field, ...props }) => {
   const { register, setValue, control } = useFormContext();
   const selection = useWatch({ name: field.name, control })
   const inputProps = field.inputProps || {};
   const registry = register(field.name, field.rules);
+
   return (
     <Select
+      {...props}
       {...inputProps}
       value={selection || null}
       {...registry}
