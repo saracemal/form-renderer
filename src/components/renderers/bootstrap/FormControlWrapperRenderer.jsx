@@ -2,7 +2,7 @@ import React from "react";
 import { FormGroup } from "reactstrap";
 
 // utils
-import { computeClasses } from "./utils";
+import { computeClasses } from "../utils";
 
 const FormControlWrapperRenderer = ({ field, renderers, overrides, ...formCtrlWrapperProps }) => {
   const className = computeClasses("form-control-wrapper", field.name, formCtrlWrapperProps);

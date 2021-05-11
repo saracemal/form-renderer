@@ -2,13 +2,13 @@ import React from "react";
 import { useFormState } from "react-hook-form";
 
 // components
-import Select from "../form/SelectField";
-import InputField from "../form/InputField";
-import PhoneNumberField from "../form/PhoneNumberField";
-import InputGroupBorder from "../form/InputGroupBorder";
+import Select from "../../form/SelectField";
+import InputField from "../../form/InputField";
+import PhoneNumberField from "../../form/PhoneNumberField";
+import InputGroupBorder from "../../form/InputGroupBorder";
 
 // utils
-import { computeClasses } from "./utils";
+import { computeClasses } from "../utils";
 
 const getFormInputType = (inputType) => {
   switch (inputType) {

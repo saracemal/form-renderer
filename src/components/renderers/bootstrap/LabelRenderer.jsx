@@ -2,11 +2,11 @@ import React from "react";
 import { Label } from "reactstrap";
 
 // components
-import { RedAsterisk } from "../FormFieldRenderer";
+import { RedAsterisk } from "../../FormFieldRenderer";
 
 // utils
-import { computeClasses } from "./utils";
-import { getIn } from "../../utils";
+import { computeClasses } from "../utils";
+import { getIn } from "../../../utils";
 
 const shouldShowAsterisk = (field) => {
   if (typeof field.rules === "function") {

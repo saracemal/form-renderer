@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 
 // utils
-import { computeClasses } from "./utils";
+import { computeClasses } from "../utils";
 
 
 export const StyledError = styled.span`

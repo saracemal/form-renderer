@@ -2,7 +2,7 @@ import React from "react";
 import { Row } from "reactstrap";
 
 // utils
-import { computeClasses } from "./utils";
+import { computeClasses } from "../utils";
 
 const RowRenderer = ({ id, fields, renderers, overrides, children, ...rowProps }) => {
   // compute default col size(can be overriden by `field`)

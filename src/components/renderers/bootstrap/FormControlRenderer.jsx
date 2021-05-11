@@ -1,7 +1,7 @@
 import React from "react";
 
 // utils
-import { computeClasses } from "./utils";
+import { computeClasses } from "../utils";
 
 const FormControlComponent = ({ field, renderers, overrides, ...formCtrlProps }) => {
   return (

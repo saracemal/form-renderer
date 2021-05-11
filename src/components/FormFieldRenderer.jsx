@@ -8,7 +8,7 @@ import InputGroupBorder from "./form/InputGroupBorder";
 import PhoneNumberField from "./form/PhoneNumberField";
 import Select from "./form/SelectField";
 import InputField from "./form/InputField";
-import { renderers as renderers_ } from "./renderers";
+import { renderers as renderers_ } from "./renderers/bootstrap";
 
 
 // utils
