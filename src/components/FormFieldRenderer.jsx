@@ -1,18 +1,8 @@
 import React from "react";
-import { useFormState } from "react-hook-form";
-import { Label, Col, FormGroup, Row } from "reactstrap";
 import styled from "styled-components/macro";
 
 // components
-import InputGroupBorder from "./form/InputGroupBorder";
-import PhoneNumberField from "./form/PhoneNumberField";
-import Select from "./form/SelectField";
-import InputField from "./form/InputField";
 import { renderers as renderers_ } from "./renderers/bootstrap";
-
-
-// utils
-import { getIn } from "../utils";
 
 export const RedSpan = styled.span`
   color: red !important;
@@ -42,114 +32,6 @@ export const phoneRegex = {
 
 export const validatePhone = (phone) =>
   phone.replace(/\D/g, "").length === 10 ? undefined : "Must be 10 digits";
-
-/////////////////////////////////////////////////////////
-
-
-const getFormInputType = (inputType) => {
-  switch (inputType) {
-    case "phone":
-      return PhoneNumberField;
-    case "select":
-      return Select;
-    case "number":
-    case "textarea":
-    case "input":
-    default:
-      return InputField;
-  }
-};
-
-const shouldWrapWithBorder = (field) => {
-  // NOTE: add here all the other options that require a border
-  return (
-    field.component === "input" ||
-    field.component === "number" ||
-    field.component === "phone"
-  );
-};
-
-const RenderLabel = ({ field }) => {
-  const shouldShowAsterisk = () => {
-    if (typeof field.rules === "function") {
-      // special case when we pass `rules` as a function
-      return getIn(["required"], field.rules({}));
-    }
-    return getIn(["rules", "required"], field);
-  };
-
-  const isFieldRequired = shouldShowAsterisk();
-
-  return (
-    <div className="d-flex">
-      <Label htmlFor={field.name}>
-        {field.label}
-        {isFieldRequired ? <RedAsterisk /> : null}
-      </Label>
-    </div>
-  );
-};
-
-const getWrapperComponent = (field) => {
-  return (
-    field.fieldWrapper || (shouldWrapWithBorder(field) && InputGroupBorder) || "div"
-  );
-};
-
-const RenderFormField = ({ field }) => {
-  const { errors } = useFormState();
-  const InputComponent = getFormInputType(field.component);
-  const inputProps = field.inputProps || {};
-  const Wrapper = getWrapperComponent(field);
-
-  return (
-    <Wrapper disabled={inputProps.disabled} error={errors[field.name]}>
-      <InputComponent field={field} />
-    </Wrapper>
-  );
-};
-
-const RenderError = ({ field }) => {
-  const { errors } = useFormState();
-  const { message = "" } = errors[field.name] || {};
-
-  return (
-    <StyledError >{message}</StyledError>
-  );
-};
-
-const renderGroupedFields = ({ idx, fields, overrides, renderers }) => {
-  const colSize = 12 / fields.length;
-  return (
-    <Row key={idx}>
-      {fields.map((field) => {
-        const { OverrideFieldControl, OverrideLabel, OverrideError, OverrideInput } =
-          overrides[field.name] || {};
-        return field.name ? (
-          <Col xs={colSize} md={colSize} key={field.name}>
-            <FormGroup>
-              {OverrideFieldControl ? (
-                <OverrideFieldControl field={field} />
-              ) : (
-                <>
-                  {OverrideLabel
-                    ? <OverrideLabel field={field} />
-                    : <RenderLabel field={field} />}
-                  {OverrideInput
-                    ? <OverrideInput field={field} />
-                    : <RenderFormField field={field} />}
-                  {OverrideError
-                    ? <OverrideError field={field} />
-                    : <RenderError field={field} />}
-                </>
-              )}
-            </FormGroup>
-          </Col>
-        ) : null;
-      })}
-    </Row>
-  );
-};
 
 /**
  * Possibly move this into the /services/api folder

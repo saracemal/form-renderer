@@ -3,12 +3,11 @@ import FormRenderer from "./components/FormRenderer";
 import styled from "styled-components/macro";
 
 // comopnents
-import CustomTextField from "./components/form/CustomTextField";
 import StepForm from "./components/form-examples/StepForm";
 
 // utils
 import { delay } from "./utils";
-import { loginFields, moreDetailFields } from "./resources/fields";
+import { loginFields } from "./resources/fields";
 
 const Wrapper = styled.div`
   width: 50%;
@@ -20,13 +19,8 @@ const Wrapper = styled.div`
 
 function App() {
   const onSubmit = ({ data, setSubmittingState }) => {
-    console.log("DATA", data);
+    alert(JSON.stringify(data));
     delay(() => setSubmittingState(false), 2000);
-  };
-  const overrides = {
-    textarea: {
-      OverrideFieldControl: CustomTextField
-    }
   };
   return (
     <div className="App">

@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
-import { Label } from "reactstrap";
 import styled from "styled-components/macro";
 
 // components

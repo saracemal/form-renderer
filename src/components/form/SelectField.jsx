@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Select from "react-select";
 import { useFormContext, useWatch } from "react-hook-form";
 import { getIn } from "../../utils";
