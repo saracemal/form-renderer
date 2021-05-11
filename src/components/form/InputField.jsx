@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Input } from "reactstrap";
 import { useFormContext } from "react-hook-form";
 
@@ -9,9 +9,10 @@ const InputField = ({ field }) => {
 
   return (
     <Input
+      key={name}
       name={name}
       {...inputProps}
-      innerRef={(el) => register(el, field.rules)}
+      {...register(field.name, field.rules)}
     />
   );
 };

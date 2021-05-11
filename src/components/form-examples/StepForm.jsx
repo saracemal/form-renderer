@@ -101,7 +101,7 @@ const getNextStepFields = (currentStep, steps) => {
 const StepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const fields = getNextStepFields(currentStep, steps);
-
+  console.log("re-rendering");
   const onSubmit = ({ data, setSubmittingState }) => {
     console.log('step form data', data);
 

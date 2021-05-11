@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Form } from "reactstrap";
 import { useForm, FormProvider } from "react-hook-form";
@@ -47,6 +47,7 @@ const FormRenderer = ({
   const [nonFieldErrors, setNonFieldErrors] = useState("");
   const methods = useForm(rhfProps);
 
+
   const onSubmit = (body) => {
     setSubmitting(true);
     submit({
@@ -57,7 +58,7 @@ const FormRenderer = ({
     });
   };
   const Wrapper = formWrapper ? formWrapper : React.Fragment;
-
+  console.log("fields", fields);
   return (
     <FormProvider {...methods}>
       <Form id={formId} onSubmit={methods.handleSubmit(onSubmit)}>

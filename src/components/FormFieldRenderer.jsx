@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormState } from "react-hook-form";
 import { Label, Col, FormGroup, Row } from "reactstrap";
 import styled from "styled-components/macro";
 
@@ -8,6 +8,8 @@ import InputGroupBorder from "./form/InputGroupBorder";
 import PhoneNumberField from "./form/PhoneNumberField";
 import Select from "./form/SelectField";
 import InputField from "./form/InputField";
+import { renderers as renderers_ } from "./renderers";
+
 
 // utils
 import { getIn } from "../utils";
@@ -95,7 +97,7 @@ const getWrapperComponent = (field) => {
 };
 
 const RenderFormField = ({ field }) => {
-  const { errors } = useFormContext();
+  const { errors } = useFormState();
   const InputComponent = getFormInputType(field.component);
   const inputProps = field.inputProps || {};
   const Wrapper = getWrapperComponent(field);
@@ -108,7 +110,7 @@ const RenderFormField = ({ field }) => {
 };
 
 const RenderError = ({ field }) => {
-  const { errors } = useFormContext();
+  const { errors } = useFormState();
   const { message = "" } = errors[field.name] || {};
 
   return (
@@ -116,7 +118,7 @@ const RenderError = ({ field }) => {
   );
 };
 
-const renderGroupedFields = ({ idx, fields, overrides }) => {
+const renderGroupedFields = ({ idx, fields, overrides, renderers }) => {
   const colSize = 12 / fields.length;
   return (
     <Row key={idx}>
@@ -129,18 +131,18 @@ const renderGroupedFields = ({ idx, fields, overrides }) => {
               {OverrideFieldControl ? (
                 <OverrideFieldControl field={field} />
               ) : (
-                  <>
-                    {OverrideLabel
-                      ? <OverrideLabel field={field} />
-                      : <RenderLabel field={field} />}
-                    {OverrideInput
-                      ? <OverrideInput field={field} />
-                      : <RenderFormField field={field} />}
-                    {OverrideError
-                      ? <OverrideError field={field} />
-                      : <RenderError field={field} />}
-                  </>
-                )}
+                <>
+                  {OverrideLabel
+                    ? <OverrideLabel field={field} />
+                    : <RenderLabel field={field} />}
+                  {OverrideInput
+                    ? <OverrideInput field={field} />
+                    : <RenderFormField field={field} />}
+                  {OverrideError
+                    ? <OverrideError field={field} />
+                    : <RenderError field={field} />}
+                </>
+              )}
             </FormGroup>
           </Col>
         ) : null;
@@ -185,10 +187,11 @@ export const renderServerErrorMessages = (errors) => {
 };
 
 const FormFieldsRenderer = ({ fields, overrides = {} }) => {
+  const renderers = renderers_;
   return (
     <>
       {fields.map((group, idx) =>
-        renderGroupedFields({ idx, fields: group, overrides })
+        <renderers.RowRenderer fields={group} id={idx} renderers={renderers} overrides={overrides} />
       )}
     </>
   );

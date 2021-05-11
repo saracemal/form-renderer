@@ -1,26 +1,19 @@
 import React, { useEffect } from "react";
 import Select from "react-select";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { getIn } from "../../utils";
 
+
 const SelectField = ({ field }) => {
-  const { register, watch, setValue, unregister } = useFormContext();
-  const selection = watch(field.name);
+  const { register, setValue, control } = useFormContext();
+  const selection = useWatch({ name: field.name, control })
   const inputProps = field.inputProps || {};
-
-  useEffect(() => {
-    register({ name: field.name }, field.rules);
-    return () => {
-      setValue(field.name, field.inputProps.isMulti ? [] : null);
-      unregister(field.name);
-    };
-    // eslint-disable-next-line
-  }, [register, setValue, unregister]);
-
+  const registry = register(field.name, field.rules);
   return (
     <Select
       {...inputProps}
       value={selection || null}
+      {...registry}
       onChange={(selection_) => {
         setValue(field.name, selection_);
 
